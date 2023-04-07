@@ -45,6 +45,6 @@ docker commit shm-bus-error-pub-1 pub-core-dump
 docker run -it pub-core-dump bash
 
 # X is the PID so in your case replace it with the actual name of the file
-lldb /shm-bus-error/target/release/shm-bus-error -c /tmp/core.X
+lldb /shm-bus-error/target/debug/shm-bus-error -c /tmp/core.X
 ```
 
