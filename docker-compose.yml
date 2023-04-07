@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+
+  pub:
+    image: gabrik91/shm-pub
+
+  sub:
+    image: gabrik91/sub
+    depends_on:
+      - pub
