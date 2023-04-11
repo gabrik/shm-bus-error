@@ -1,0 +1,9 @@
+version: "3.2"
+
+services:
+
+  pub:
+    image: gabrik91/shm-channel
+    env:
+      - ELEMS: 100
+      - SIZE: 1024000

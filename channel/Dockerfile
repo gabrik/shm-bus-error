@@ -19,4 +19,4 @@ RUN bash -c "source /root/.cargo/env && cd /shm-bus-error  && cargo build --all-
 
 RUN  DEBIAN_FRONTEND=noninteractive apt clean && apt autoclean
 
-CMD bash -c "/shm-bus-error/target/debug/shm-bus-error -m peer -p debug/aggregator"
+CMD bash -c "/shm-bus-error/target/debug/shm-channel -n $ELEMS -s $SIZE"
