@@ -1,3 +1,5 @@
+#![feature(pointer_is_aligned)]
+#![feature(strict_provenance)]
 
 use clap::{App, Arg};
 use flume::Receiver;
@@ -166,7 +168,9 @@ async fn read_task(rx: Receiver<SharedMemoryBuf>, elem_size: usize) {
     let mut count = 0;
     while let Ok(buff) = rx.recv_async().await {
         let s_pos = rand::random::<usize>()%(elem_size-16);
-        println!("[{}] Receiving SHM Data [{}..{}] {:?}", count, s_pos, s_pos+16, &buff.as_slice()[s_pos..s_pos+16]);
+        let ptr_buff = buff.as_slice().as_ptr(); // as *const u8;
+        println!("[{count}] Receiving SHM Data - Pointer {:#8x}, is alined? {} is null? {}",ptr_buff.addr(), ptr_buff.is_aligned(), ptr_buff.is_null());
+        println!("[{count}] Receiving SHM Data - [{}..{}] {:?}", s_pos, s_pos+16, &buff.as_slice()[s_pos..s_pos+16]);
         count += 1;
     }
 }
