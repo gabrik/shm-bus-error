@@ -10,7 +10,7 @@ This repo contains a simple way to reproduce:
 ```
 
 
-## How to run
+## How to run (pubslisher)
 
 First configure your docker host to allow core dumps:
 
@@ -35,7 +35,7 @@ After some time (at least on Ubuntu focal, x86 hosts), it will fail with
 shm-bus-error-pub-1  | Bus error (core dumped)
 ```
 
-## Inspect the core dump
+### Inspect the core dump
 
 Once the container is failed export it as an image and run a shell in it.
 
@@ -48,3 +48,25 @@ docker run -it pub-core-dump bash
 lldb /shm-bus-error/target/debug/shm-bus-error -c /tmp/core.X
 ```
 
+## How to run (channel)
+
+
+```bash
+$ docker run -it -e SIZE=1024000 -e ELEMS=100 --name shm-chan gabrik91/shm-channel"
+```
+
+Shared Memory size in docker can be changed by `--shm-size=70M`
+
+
+### Inspect the core dump
+
+Once the container is failed export it as an image and run a shell in it.
+
+
+```bash
+docker commit shm-chan chan-core-dump
+docker run -it chan-core-dump bash
+
+# X is the PID so in your case replace it with the actual name of the file
+lldb /shm-bus-error/target/debug/shm-channel -c /tmp/core.X
+```
